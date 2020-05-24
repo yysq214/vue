@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="n1">
+    <select name="" id=""  v-model="fh">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="text"  v-model="n2">
+    <input type="text" v-model="result">=
+    <button @click="j">计算</button>
+</div>
+<script src="js/vue-2.4.0.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            n1: 0,
+            n2: 0,
+            result: 0,
+            fh: '+'
+        },
+        methods: {
+            j(){
+                this.result = eval(parseFloat(this.n1) + this.fh + parseFloat(this.n2));
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(150px);
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s;
+        }
+    </style>
+
+</head>
+<body>
+<div id="app">
+    <a href="" @click.prevent="flag=true">登录</a>
+    <a href="" @click.prevent="flag=false">注册</a>
+    <transition mode="out-in">
+        <login v-if="flag"></login>
+        <register v-else="flag"></register>
+
+    </transition>
+    <template v-if="flag">
+        <label>Username</label>
+        <input type="text" placeholder="Enter your username" key="user">
+    </template>
+    <template v-else="flag">
+        <label>Email</label>
+        <input  type="text" placeholder="Enter your email address"  key="email">
+    </template>
+</div>
+<template id="login">
+    <div>
+        <h1>登录</h1>
+        <input type="text" placeholder="用户名">
+    </div>
+</template>
+<template id="register">
+    <div>
+        <h1>注册</h1>
+        <input type="text" placeholder="手机号">
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('login', {
+        template: "#login"
+    });
+    Vue.component('register', {
+        template: "#register"
+    });
+    var vm = new Vue({
+
+        el: "#app",
+
+        data: {
+            flag: false
+        },
+        methods: {
+
+        },
+
+    });
+</script>
+</body>
+</html>

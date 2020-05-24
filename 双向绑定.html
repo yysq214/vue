@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--
+     数据的单向绑定: 数据从vm(viewmodel) -> v(view)
+     vm层的数据改变 v层数据跟着变, 但是v层数据改变, vm不会变
+     -->
+    <button @click="f">click</button>
+    <p>{{msg}}</p>
+    <input type="text" :value="msg" @click="f2">
+    <!--
+        双向绑定
+    -->
+    <input type="text" :value="msg" v-model="msg">
+</div>
+<script src="js/vue-2.4.0.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "初始的文字"
+        },
+        methods: {
+            f(){
+                this.msg = "点击过后的文字";
+            },
+            f2() {
+                console.log(this.msg);
+            }
+        }
+    });
+</script>
+</body>
+</html>

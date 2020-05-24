@@ -1,0 +1,168 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/css.css">
+
+</head>
+
+<body>
+<div id="app">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div>
+                    ID: <input type="text" v-model="id">
+                    NAME: <input type="text" v-model="name">
+                    <button class="btn btn-danger" @click="add">添加</button>
+                    <input type="text" v-model="search" v-on:keyup="find()">
+                </div>
+
+                <h2 class="sub-header">Section title</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>TIME</th>
+                            <th>DO</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="data in find()" :key="data.id">
+                            <td>{{data.id}}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.timer|timeFormat}}</td>
+                            <td><a href="" @click.prevent="del(data.id)">删除</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{d|capitalize}}
+    <br>
+    {{e|capitalize(true)}}
+    <hr>
+    {{t}}
+    <hr>
+    {{t|timeFormat}}
+    <hr>
+    {{t|timeFormat('yyyy-mm-dd')}}
+    <hr>
+    {{t|timeFormat('yy-mm-dd')}}
+</div>
+<script src="js/vue.js"></script>
+<script>
+    Vue.filter('capitalize', function (str, param=null) {
+
+        // var p = param || 'xxx';
+
+        if (!str){
+            return '';
+        }
+
+        if (param){
+            var arr = str.split(' ');
+            var tempArr = [];
+
+            arr.forEach(function (item, i) {
+                tempArr.push(item.charAt(0).toUpperCase() + item.slice(1));
+            });
+
+            return tempArr.join(' ');
+        }
+
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    });
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            d: 'hello world',
+            e: 'what is your name',
+            t: new Date(),
+            datas: [
+                {id:1, name: '宝马', timer: new Date()},
+                {id:2, name: '宝骏', timer: new Date()}
+            ],
+            id: 0,
+            name: '',
+            search: ''
+        },
+        methods: {
+            add(){
+                var tempObj = {
+                    id: this.id,
+                    name: this.name,
+                    timer: new Date()
+                }
+                this.datas.push(tempObj);
+            },
+            del(id){
+                //查询数据中这个id的索引
+                //根据索引删除
+                var index = this.datas.findIndex(function (item) {
+                    return item.id == id;
+                });
+                this.datas.splice(index, 1);
+            },
+            find(){
+
+                var result = null;
+                // console.log(this.search);
+                // var _this = this;
+                // result = this.datas.filter(function (item) {
+                //     console.log(_this, item.name);
+                //     return item.name.includes(_this.search);
+                // });
+                result = this.datas.filter(item =>{
+                    console.log(this);
+                    return item.name.includes(this.search);
+                })
+                // console.log(result);
+                return result;
+            }
+        },
+        filters: {
+            timeFormat: function (timeStr, arg='') {
+                var timeObj = new Date(timeStr);
+                var y = timeObj.getFullYear();
+                var m = (timeObj.getMonth() + 1).toString().padStart(2, 0);
+                var d = timeObj.getDate().toString().padStart(2, 0);
+
+                //yyyy-mm-dd
+                //yy-mm-dd
+                if (arg.toLowerCase() === 'yyyy-mm-dd'){
+                    return `${y}-${m}-${d}`;
+                } else if(arg.toLowerCase() === 'yy-mm-dd'){
+                    return `${y.toString().slice(2)}-${m}-${d}`;
+                }
+
+                var h = timeObj.getHours();
+                var min = timeObj.getMinutes();
+                var s  = timeObj.getSeconds();
+
+                return `${y}-${m}-${d} ${h}:${min}:${s}`;
+
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

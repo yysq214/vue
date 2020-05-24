@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link rel="stylesheet" href="css/animated.css">
+    <style>
+        /*
+        enter 进入动画 从0-1;
+        leave 离开动画 从1-0;
+        enter-to
+        leave-to -to结束状态
+        enter-active
+        leave-active 过程
+        */
+        /*.v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(300px);
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 5s;
+        }*/
+        /*.my-enter,
+        .my-leave-to{
+            !*opacity: 0;*!
+            opacity: 1;
+            transform: translateX(300px) translateY(300px);
+        }
+        .my-enter-active,
+        .my-leave-active{
+            opacity: 1;
+            transition: all 5s cubic-bezier(.15,-1.33,.82,1.68);
+        }
+
+        .p1{
+            position: absolute;
+            left: 300px;
+            top: 300px;
+        }
+        .p2{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }*/
+        p{
+            float: left;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="flag=!flag">click</button>
+    <!--<transition>-->
+        <!--<p v-if="flag">hello</p>-->
+    <!--</transition>-->
+    <!--<transition name="my">-->
+    <!--<p v-if="flag" class="p2">hello</p>-->
+    <!--</transition>-->
+    <!--<p class="p1">hello</p>-->
+    <transition
+        name="custom-classes-transition"
+        enter-active-class="animated tada"
+        leave-active-class="animated flash"
+    >
+        <p v-if="flag" >hello</p>
+    </transition>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            flag: true
+        },
+        methods: {
+
+        }
+    });
+</script>
+</body>
+</html>

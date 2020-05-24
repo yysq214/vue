@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    ID: <input type="text" v-model="id">
+    NAME: <input type="text" v-model="name">
+    <button @click="add">ADD</button>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>DO</th>
+        </tr>
+        <tr v-for="list in lists">
+            <td>{{list.id}}</td>
+            <td>{{list.name}}</td>
+            <td>删除/编辑</td>
+        </tr>
+    </table>
+</div>
+<script src="js/vue-2.4.0.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            id:0,
+            name: '名字',
+            lists: [
+                {id:1, name: '小明'},
+                {id:2, name: '小红'}
+            ]
+        },
+        methods: {
+            add: function () {
+                var tempObj = {
+                    id: this.id,
+                    name: this.name
+                }
+                console.log(tempObj);
+                this.lists.push(tempObj);
+                this.id=0;
+                this.name='名字';
+            }
+        }
+    });
+</script>
+</body>
+</html>
